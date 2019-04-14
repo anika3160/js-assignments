@@ -22,7 +22,7 @@
  *   '',  'bb'  => 'bb'
  */
 function concatenateStrings(value1, value2) {
-    throw new Error('Not implemented');
+   return value1.concat(value2);
 }
 
 
@@ -38,7 +38,7 @@ function concatenateStrings(value1, value2) {
  *   ''      => 0
  */
 function getStringLength(value) {
-    throw new Error('Not implemented');
+    return value.length;
 }
 
 /**
@@ -55,7 +55,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-    throw new Error('Not implemented');
+    return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -69,7 +69,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-    throw new Error('Not implemented');
+    return (value.replace('Hello, ', '')).replace('!','');
 }
 
 
@@ -84,7 +84,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-    throw new Error('Not implemented');
+    return value[0];
 }
 
 /**
@@ -99,7 +99,7 @@ function getFirstChar(value) {
  *   '\tHello, World! ' => 'Hello, World!'
  */
 function removeLeadingAndTrailingWhitespaces(value) {
-    throw new Error('Not implemented');
+    return value.replace(/(^\s*)|(\s*$)/g,"");
 }
 
 /**
@@ -114,7 +114,7 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
-    throw new Error('Not implemented');
+    return value.repeat(count);
 }
 
 /**
@@ -130,7 +130,12 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    throw new Error('Not implemented');
+    let arr = [];
+    for (let i = 0; i <str.length ; i++) {
+        arr[i]=str[i];
+    }
+    arr.splice(str.indexOf(value), value.length);
+    return arr.join('');
 }
 
 /**
@@ -145,7 +150,7 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-    throw new Error('Not implemented');
+    return str.replace(/^[<]|[>]/g,"");
 }
 
 
@@ -160,21 +165,21 @@ function unbracketTag(str) {
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
 function convertToUpperCase(str) {
-    throw new Error('Not implemented');
+    return str.toUpperCase();
 }
 
 /**
  * Extracts e-mails from single string with e-mails list delimeted by semicolons
  *
  * @param {string} str
- * @return {array}
+ * @return {string[]}
  *
  * @example
  *   'angus.young@gmail.com;brian.johnson@hotmail.com;bon.scott@yahoo.com' => ['angus.young@gmail.com', 'brian.johnson@hotmail.com', 'bon.scott@yahoo.com']
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-    throw new Error('Not implemented');
+    return (str.indexOf(';')===-1) ? str.split() : str.split(';');
 }
 
 /**
@@ -221,7 +226,20 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+    let initial='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let end='NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+    function wordConverter(str){
+        let arr = [];
+        for (let i = 0; i <str.length ; i++) {
+            if (end[initial.indexOf(str[i])]) {
+                arr[i]=end[initial.indexOf(str[i])];
+            } else {
+                arr[i]=str[i];
+            }
+        }
+        return arr.join('');
+    }
+    return str.split(' ').map(item=> wordConverter(item)).join(' ');
 }
 
 /**
@@ -238,7 +256,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+    return (value instanceof String || typeof(value)==='string');
 }
 
 
@@ -267,7 +285,13 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
+    let deck ={
+        'A♣': 0, '2♣': 1, '3♣': 2, '4♣': 3,'5♣': 4,'6♣': 5,'7♣': 6,'8♣': 7,'9♣': 8,'10♣': 9,'J♣': 10,'Q♣': 11,'K♣': 12,
+        'A♦': 13,'2♦': 14,'3♦': 15,'4♦': 16,'5♦': 17,'6♦': 18,'7♦': 19,'8♦': 20,'9♦': 21,'10♦': 22,'J♦': 23,'Q♦': 24,'K♦': 25,
+        'A♥': 26,'2♥': 27,'3♥': 28,'4♥': 29,'5♥': 30,'6♥': 31,'7♥': 32,'8♥': 33,'9♥': 34,'10♥': 35,'J♥': 36,'Q♥': 37,'K♥': 38,
+        'A♠': 39,'2♠': 40,'3♠': 41,'4♠': 42,'5♠': 43,'6♠': 44,'7♠': 45,'8♠': 46,'9♠': 47,'10♠': 48,'J♠': 49,'Q♠': 50,'K♠': 51
+    }
+    return deck[value];
 }
 
 
