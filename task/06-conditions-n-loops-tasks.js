@@ -30,7 +30,17 @@
  *
  */
 function getFizzBuzz(num) {
-    throw new Error('Not implemented');
+    if (num%3===0 && num%5===0) {
+        return 'FizzBuzz';
+    } else {
+        if (num%3===0) {
+            return 'Fizz'
+        } else if (num%5===0) {
+            return 'Buzz'
+        } else {
+            return num;
+        }
+    }
 }
 
 
@@ -46,7 +56,11 @@ function getFizzBuzz(num) {
  *   10 => 3628800
  */
 function getFactorial(n) {
-    throw new Error('Not implemented');
+    let result = 1;
+    while(n){
+        result *= n--;
+    }
+    return result;
 }
 
 
@@ -63,7 +77,12 @@ function getFactorial(n) {
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
 function getSumBetweenNumbers(n1, n2) {
-    throw new Error('Not implemented');
+    let res=0;
+    while (n1<=n2) {
+        res+=n1;
+        n1++;
+    }
+    return res;
 }
 
 
@@ -82,7 +101,7 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,10,10 =>  true
  */
 function isTriangle(a,b,c) {
-    throw new Error('Not implemented');
+    return  (a + b > c) && (a + c > b) && (b + c > a);
 }
 
 
@@ -226,7 +245,20 @@ function reverseString(str) {
  *   34143 => 34143
  */
 function reverseInteger(num) {
-    throw new Error('Not implemented');
+    let arr=[];
+    let koeff=1;
+    while (num>1) {
+        arr.push(Math.floor(num % 10));
+        num /= 10;
+    }
+    arr.reverse();
+    num=0;
+
+    for (let i = 0; i <arr.length; i++) {
+        num+=arr[i]*koeff;
+        koeff*=10;
+    }
+    return num;
 }
 
 
@@ -251,7 +283,23 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-    throw new Error('Not implemented');
+    ccn=new String(ccn);
+    let arr=ccn.split('');
+    arr=arr.map(item=>item*1);
+    if (arr.length%2===0){
+        for (let i = 0; i <arr.length ; i+=2) {
+            if (2*arr[i] > 9) {
+                arr[i]=2*arr[i]-9;
+            } else {arr[i]=2*arr[i];}
+        }
+    } else {
+        for (let i = 1; i <arr.length ; i+=2) {
+            if (2*arr[i] > 9) {
+                arr[i]=2*arr[i]-9;
+            } else {arr[i]=2*arr[i];}
+        }
+    }
+    return  arr.reduce((acc, item)=>acc+item)%10===0;
 }
 
 
@@ -270,7 +318,19 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-    throw new Error('Not implemented');
+    if (num<10) {
+        return num;
+    } else {
+        let result;
+        let arr=[];
+        while(num>0){
+            arr.push(num%10);
+            num=Math.floor(num/10);
+        }
+        result=arr.reduce((acc, item)=>acc+item);
+        if (result>=10) { result=getDigitalRoot(result); }
+        return result;
+    }
 }
 
 
@@ -296,7 +356,34 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+    let conf=['[',']', '{', '}', '(', ')','<', '>'];
+    let arrOfStr;
+    let controlArr;
+
+    function getNewStr(oldStr) {
+        let newStr=[];
+        for (let i = 0; i <oldStr.length ; i++) {
+            if ((conf.indexOf(oldStr[i])) % 2 === 0) {
+                if (oldStr[i + 1] === conf[(conf.indexOf(oldStr[i])) + 1]) {
+                    i++;
+                } else {
+                    newStr.push(oldStr[i]);
+                }
+            } else {
+                newStr.push(oldStr[i]);
+            }
+        }
+        return newStr;
+    }
+
+    arrOfStr=getNewStr(str);
+    while (arrOfStr.length!==0){
+        controlArr=arrOfStr;
+        arrOfStr=getNewStr(arrOfStr);
+        if (controlArr.length===arrOfStr.length) {break;}
+
+    }
+    return arrOfStr.length === 0;
 }
 
 
@@ -356,7 +443,18 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    let result=[];
+    let ost;
+    do { if (num ===0) {
+        return 0;
+    }
+        ost=num%n;
+        result.push(ost);
+        num=Math.floor(num/n);
+    } while (num>=n);
+    result.push(num);
+    result.reverse();
+    return result.join('');
 }
 
 
@@ -396,7 +494,26 @@ function getCommonDirectoryPath(pathes) {
  *
  */
 function getMatrixProduct(m1, m2) {
-    throw new Error('Not implemented');
+    let m1Rows = m1.length, m1Cols = m1[0].length,
+        m2Rows = m2.length, m2Cols = m2[0].length,
+        m=[];
+
+    if (m1Cols != m2Rows) {return false};
+
+    for (let i = 0; i < m1Rows; i++) {
+        m[i] = [];
+    };
+
+    for (let k = 0; k < m2Cols; k++) {
+        for (let i = 0; i < m1Rows; i++) {
+            let temp = 0;
+        for (let j = 0; j < m2Rows; j++) {
+            temp += m1[i][j]*m2[j][k];
+        }
+        m[i][k] = temp;
+    }
+    }
+    return m;
 }
 
 
